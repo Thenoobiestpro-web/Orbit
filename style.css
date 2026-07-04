@@ -45,11 +45,49 @@ a{ color:inherit; text-decoration:none; }
 
 ::selection{ background: var(--fluxio); color:#1a1208; }
 
-::-webkit-scrollbar{ width:10px; }
-::-webkit-scrollbar-track{ background:transparent; }
-::-webkit-scrollbar-thumb{ background: var(--border); border-radius:10px; }
-::-webkit-scrollbar{ display: none; }
-html{ scrollbar-width: none; }
+/* native scrollbar is hidden — replaced by the custom fading scrollbar below */
+html{
+  scrollbar-width: none;
+}
+::-webkit-scrollbar{
+  display: none;
+}
+
+/* custom overlay scrollbar — fades in while scrolling, fades out when idle */
+.custom-scrollbar{
+  position: fixed;
+  top: 8px;
+  right: 6px;
+  bottom: 8px;
+  width: 10px;
+  z-index: 999;
+  pointer-events: none;
+}
+.custom-scrollbar-thumb{
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  border-radius: 999px;
+  background: var(--fluxio);
+  border: 2px solid var(--bg-soft);
+  background-clip: padding-box;
+  transition: opacity 1.5s var(--ease), background 0.25s var(--ease);
+}
+.custom-scrollbar.is-visible .custom-scrollbar-track,
+.custom-scrollbar.is-visible .custom-scrollbar-thumb{
+  opacity: 1;
+}
+.custom-scrollbar:not(.is-visible) .custom-scrollbar-track,
+.custom-scrollbar:not(.is-visible) .custom-scrollbar-thumb{
+  opacity: 0;
+}
+.custom-scrollbar.is-hovering .custom-scrollbar-thumb{
+  background: var(--nox);
+}
+
+@media (max-width: 640px){
+  .custom-scrollbar{ display: none; } /* mobile has its own native scroll gesture */
+}
 
 /* ============================================
    REVEAL ON SCROLL
