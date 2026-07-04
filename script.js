@@ -119,6 +119,78 @@ if (glow && !prefersReducedMotion) {
 })();
 
 /* ==========================================================
+   CUSTOM FADING SCROLLBAR
+   Mirrors native scroll position, fades in while scrolling,
+   fades out shortly after you stop.
+   ========================================================== */
+(function initCustomScrollbar() {
+  const bar = document.getElementById('customScrollbar');
+  const thumb = document.getElementById('scrollbarThumb');
+  if (!bar || !thumb) return;
+
+  let hideTimer = null;
+  let ticking = false;
+
+  function updateThumb() {
+    const track = bar.getBoundingClientRect();
+    const trackHeight = track.height;
+
+    const docHeight = document.documentElement.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollTop = window.scrollY;
+    const maxScroll = docHeight - viewportHeight;
+
+    const thumbHeight = Math.max((viewportHeight / docHeight) * trackHeight, 36);
+    const maxThumbTravel = trackHeight - thumbHeight;
+    const progress = maxScroll > 0 ? scrollTop / maxScroll : 0;
+
+    thumb.style.height = thumbHeight + 'px';
+    thumb.style.top = (progress * maxThumbTravel) + 'px';
+    ticking = false;
+  }
+
+  function requestUpdate() {
+    if (!ticking) {
+      requestAnimationFrame(updateThumb);
+      ticking = true;
+    }
+  }
+
+  function showBar() {
+    bar.classList.add('is-visible');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      if (!bar.classList.contains('is-hovering')) {
+        bar.classList.remove('is-visible');
+      }
+    }, 900);
+  }
+
+  window.addEventListener('scroll', () => {
+    requestUpdate();
+    showBar();
+  }, { passive: true });
+
+  window.addEventListener('resize', requestUpdate);
+
+  bar.addEventListener('mouseenter', () => {
+    bar.classList.add('is-hovering');
+    showBar();
+  });
+  bar.addEventListener('mouseleave', () => {
+    bar.classList.remove('is-hovering');
+    showBar();
+  });
+
+  updateThumb();
+  // brief hello-fade on load so people notice it exists
+  requestAnimationFrame(() => {
+    bar.classList.add('is-visible');
+    hideTimer = setTimeout(() => bar.classList.remove('is-visible'), 1200);
+  });
+})();
+
+/* ==========================================================
    SCROLL REVEAL (IntersectionObserver)
    Covers both .reveal elements and the sticker project cards.
    ========================================================== */
