@@ -15,6 +15,7 @@
   --fluxio: #ff9a5c;
   --nox:    #a48bff;
   --kairo:  #5fd9a0;
+  --ember:  #ff5a3c;
   --cream:  #f5efe3;
 
   --font-display: 'Fredoka', 'Inter', sans-serif;
@@ -368,7 +369,7 @@ html{
 
 .card-grid{
   display:grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap:30px;
   padding-top: 10px;
 }
@@ -394,10 +395,12 @@ html{
 .card-1{ --rot: -1.4deg; box-shadow: 6px 6px 0 rgba(255,154,92,0.35); }
 .card-2{ --rot: 1deg;    box-shadow: 6px 6px 0 rgba(164,139,255,0.35); }
 .card-3{ --rot: -0.6deg; box-shadow: 6px 6px 0 rgba(95,217,160,0.35); }
+.card-4{ --rot: 0.9deg;  box-shadow: 6px 6px 0 rgba(255,90,60,0.35); }
 
 .card[data-accent="fluxio"]{ --accent: var(--fluxio); }
 .card[data-accent="nox"]{ --accent: var(--nox); }
 .card[data-accent="kairo"]{ --accent: var(--kairo); }
+.card[data-accent="ember"]{ --accent: var(--ember); }
 
 .card:hover{
   transform: rotate(0deg) translateY(-6px);
@@ -407,6 +410,7 @@ html{
 .card-1:hover{ box-shadow: 8px 8px 0 var(--fluxio); }
 .card-2:hover{ box-shadow: 8px 8px 0 var(--nox); }
 .card-3:hover{ box-shadow: 8px 8px 0 var(--kairo); }
+.card-4:hover{ box-shadow: 8px 8px 0 var(--ember); }
 
 .card-icon{
   width:46px; height:46px;
@@ -550,7 +554,7 @@ html{
 .chip:nth-child(1):hover{ border-color: var(--fluxio); color: var(--cream); }
 .chip:nth-child(2):hover{ border-color: var(--nox); color: var(--cream); }
 .chip:nth-child(3):hover{ border-color: var(--kairo); color: var(--cream); }
-.chip:nth-child(4):hover{ border-color: var(--fluxio); color: var(--cream); }
+.chip:nth-child(4):hover{ border-color: var(--ember); color: var(--cream); }
 .chip:hover{ transform: translateY(-2px); }
 
 /* ============================================
@@ -569,7 +573,10 @@ html{
 }
 .footer-links{ display:flex; gap:20px; }
 .footer-links a{ transition: color 0.25s var(--ease); }
-.footer-links a:hover{ color: var(--fluxio); }
+.footer-links a:nth-child(1):hover{ color: var(--fluxio); }
+.footer-links a:nth-child(2):hover{ color: var(--nox); }
+.footer-links a:nth-child(3):hover{ color: var(--kairo); }
+.footer-links a:nth-child(4):hover{ color: var(--ember); }
 
 /* ============================================
    RESPONSIVE
