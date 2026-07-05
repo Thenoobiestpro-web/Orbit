@@ -1,4 +1,44 @@
 /* ==========================================================
+   BACKGROUND MUSIC — fade in, with a real autoplay fallback
+   ========================================================== */
+(function initBackgroundMusic() {
+  const audio = document.getElementById('bgmusic');
+  if (!audio) return;
+
+  audio.volume = 0;
+  audio.muted = true; // browsers check `muted`, not volume, for autoplay policy
+
+  function fadeInAudio() {
+    let volume = 0;
+    const fadeIn = setInterval(() => {
+      if (volume < 1) {
+        volume += 0.05;
+        audio.volume = Math.min(volume, 1);
+      } else {
+        clearInterval(fadeIn);
+      }
+    }, 200);
+  }
+
+  audio.play().then(() => {
+    // autoplay succeeded (muted) — unmute and fade in
+    audio.muted = false;
+    fadeInAudio();
+  }).catch(() => {
+    // autoplay blocked — start for real on the user's first interaction
+    console.log('Autoplay blocked until user interacts');
+    const startOnInteract = () => {
+      audio.muted = false;
+      audio.play().then(fadeInAudio).catch(() => {});
+      document.removeEventListener('click', startOnInteract);
+      document.removeEventListener('keydown', startOnInteract);
+    };
+    document.addEventListener('click', startOnInteract, { once: true });
+    document.addEventListener('keydown', startOnInteract, { once: true });
+  });
+})();
+
+/* ==========================================================
    YEAR
    ========================================================== */
 document.getElementById('year').textContent = new Date().getFullYear();
