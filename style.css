@@ -161,6 +161,11 @@ html{
   transition: color 0.25s var(--ease);
 }
 .nav-links a:hover{ color: var(--fluxio); }
+.nav-github{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
 
 /* ============================================
    HERO
@@ -588,6 +593,33 @@ html{
   color: var(--text-dim);
   font-size:15px;
   max-width:480px;
+  margin-bottom:22px;
+}
+.about-github{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  font-weight:600;
+  color: var(--text);
+  padding:10px 16px;
+  border-radius:12px;
+  border:2px solid var(--border-light);
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.about-github:hover{
+  border-color: var(--fluxio);
+  color: var(--fluxio);
+  transform: translateY(-2px);
+}
+.about-side-label{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color: var(--text-faint);
+  margin-bottom:14px;
 }
 .about-chips{
   display:flex;
@@ -644,7 +676,8 @@ html{
 
 @media (max-width: 640px){
   .nav{ padding:16px 20px; }
-  .nav-links{ gap:16px; }
+  .nav-links{ gap:14px; }
+  .nav-github span{ display:none; }
   .hero{ padding:110px 20px 70px; }
   .projects{ padding:60px 20px 40px; }
   .about{ padding:36px 20px 80px; }
