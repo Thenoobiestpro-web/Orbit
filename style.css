@@ -478,39 +478,92 @@ html{
 
 /* soon card */
 .soon-card{
+  position:relative;
   margin-top:28px;
   display:flex;
   align-items:center;
-  gap:18px;
-  padding:24px 26px;
+  gap:20px;
+  padding:26px 28px;
   border-radius: var(--radius-lg);
-  border:2px dashed var(--border-light);
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(120deg, var(--fluxio), var(--nox) 55%, var(--kairo)) border-box;
+  border:2px solid transparent;
   color: var(--text-dim);
+  overflow:hidden;
+  isolation:isolate;
+}
+.soon-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(255,154,92,0.14), transparent 45%),
+    radial-gradient(circle at 88% 80%, rgba(164,139,255,0.14), transparent 50%);
 }
 .soon-pulse{
-  width:44px; height:44px;
+  width:52px; height:52px;
   border-radius:50%;
-  background: var(--surface);
+  background: var(--bg-soft);
   border:2px solid var(--border-light);
   display:flex;
   align-items:center;
   justify-content:center;
   flex-shrink:0;
-  font-size:20px;
+  color: var(--fluxio);
   animation: jiggle 3s ease-in-out infinite;
 }
+.soon-pulse svg{ width:24px; height:24px; }
 @keyframes jiggle{
   0%,100%{ transform: rotate(-4deg); }
   50%{ transform: rotate(6deg); }
 }
+.soon-body{ flex:1; min-width:200px; }
+.soon-eyebrow{
+  display:inline-block;
+  font-family: var(--font-display);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color: var(--kairo);
+  margin-bottom:6px;
+}
 .soon-card h3{
   font-family: var(--font-display);
-  font-size:16px;
+  font-size:17px;
   font-weight:600;
   color: var(--cream);
-  margin-bottom:4px;
+  margin-bottom:5px;
+  line-height:1.3;
 }
 .soon-card p{ font-size:13.5px; }
+.soon-date{
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  padding:12px 18px;
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+  border:1px solid var(--border-light);
+}
+.soon-date-label{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color: var(--text-faint);
+}
+.soon-date-range{
+  font-family: var(--font-display);
+  font-size:14.5px;
+  font-weight:600;
+  color: var(--cream);
+  white-space:nowrap;
+}
 
 /* ============================================
    ABOUT
@@ -597,4 +650,5 @@ html{
   .about{ padding:36px 20px 80px; }
   .footer{ flex-direction:column; gap:14px; padding:24px 20px 40px; text-align:center; }
   .soon-card{ flex-direction:column; text-align:center; }
+  .soon-date{ flex-direction:row; gap:8px; }
 }
