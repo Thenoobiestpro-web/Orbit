@@ -26,15 +26,16 @@
     fadeInAudio();
   }).catch(() => {
     // autoplay blocked — start for real on the user's first interaction
-    console.log('Autoplay blocked until user interacts');
     const startOnInteract = () => {
       audio.muted = false;
       audio.play().then(fadeInAudio).catch(() => {});
       document.removeEventListener('click', startOnInteract);
       document.removeEventListener('keydown', startOnInteract);
+      document.removeEventListener('touchstart', startOnInteract);
     };
     document.addEventListener('click', startOnInteract, { once: true });
     document.addEventListener('keydown', startOnInteract, { once: true });
+    document.addEventListener('touchstart', startOnInteract, { once: true, passive: true });
   });
 })();
 
